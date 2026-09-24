@@ -1,0 +1,117 @@
+---
+interface Props {
+  rating?: number;
+  total?: number;
+}
+
+const { rating = 4.9, total = 482 } = Astro.props;
+
+const heroImage =
+  'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1920&auto=format&fit=crop&q=80';
+---
+
+<section
+  id="top"
+  class="relative isolate flex min-h-[100svh] items-center overflow-hidden"
+  aria-labelledby="hero-heading"
+>
+  <!-- Background -->
+  <div class="absolute inset-0 -z-20">
+    <img
+      src={heroImage}
+      alt="The illuminated facade and grand courtyard of Château Lumière at dusk in Paris"
+      class="h-full w-full object-cover object-center"
+      loading="eager"
+      decoding="async"
+      fetchpriority="high"
+    />
+  </div>
+  <div
+    class="absolute inset-0 -z-10 bg-gradient-to-b from-ink/85 via-ink/80 to-ink"
+    aria-hidden="true"
+  >
+  </div>
+  <div class="absolute inset-0 -z-10 bg-ink-fade" aria-hidden="true"></div>
+
+  <!-- Gold hairline frame -->
+  <div
+    class="pointer-events-none absolute inset-x-4 inset-y-6 -z-10 hidden rounded-[28px] border border-gold/10 sm:block"
+    aria-hidden="true"
+  >
+  </div>
+
+  <div class="mx-auto w-full max-w-7xl px-6 py-32 sm:px-8 lg:px-12">
+    <div class="max-w-3xl" data-reveal>
+      <p
+        class="mb-6 flex items-center gap-3 text-[0.62rem] font-medium uppercase tracking-widest2 text-gold/85 sm:text-xs"
+      >
+        <span class="h-px w-10 bg-gold/60" aria-hidden="true"></span>
+        Paris · 5<sup class="text-[0.6em]">e</sup> arrondissement · Since 1908
+      </p>
+
+      <h1
+        id="hero-heading"
+        class="font-display text-[3.25rem] leading-[0.95] tracking-tight text-cream sm:text-7xl lg:text-[5.5rem]"
+      >
+        Château
+        <span class="gold-text italic">Lumière</span>
+      </h1>
+
+      <p class="mt-7 max-w-xl text-base leading-relaxed text-cream-muted sm:text-lg">
+        A nineteenth-century hôtel particulier reimagined as a boutique sanctuary on
+        Boulevard Saint-Germain — where gilded age craft meets contemporary Parisian luxury.
+      </p>
+
+      <!-- Google rating badge -->
+      <div
+        class="mt-10 inline-flex flex-wrap items-center gap-x-5 gap-y-3 rounded-full border border-gold/25 bg-ink-800/70 px-5 py-3 backdrop-blur-md"
+      >
+        <span class="flex items-center gap-2">
+          <svg viewBox="0 0 24 24" class="h-5 w-5" aria-hidden="true">
+            <path fill="#4285F4" d="M23.5 12.27c0-.79-.07-1.54-.2-2.27H12v4.51h6.47a5.54 5.54 0 0 1-2.4 3.64v3h3.88c2.27-2.09 3.55-5.17 3.55-8.88z"/>
+            <path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.95-2.91l-3.88-3c-1.08.72-2.45 1.15-4.07 1.15-3.13 0-5.78-2.11-6.73-4.96H1.27v3.1A12 12 0 0 0 12 24z"/>
+            <path fill="#FBBC05" d="M5.27 14.28A7.2 7.2 0 0 1 4.89 12c0-.79.14-1.56.38-2.28V6.62H1.27A12 12 0 0 0 0 12c0 1.94.46 3.77 1.27 5.38l4-3.1z"/>
+            <path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.44-3.44C17.95 1.18 15.24 0 12 0A12 12 0 0 0 1.27 6.62l4 3.1C6.22 6.86 8.87 4.75 12 4.75z"/>
+          </svg>
+          <span class="text-sm font-semibold text-cream">
+            <span class="sr-only">Rated </span>{rating}
+            <span class="text-gold" aria-hidden="true">★</span>
+          </span>
+          <span class="text-sm text-cream-dim">on Google Reviews</span>
+        </span>
+        <span class="hidden h-4 w-px bg-gold/25 sm:block" aria-hidden="true"></span>
+        <span class="text-sm text-cream-muted">
+          <strong class="font-semibold text-cream">{total.toLocaleString('en-US')}</strong> verified guests
+        </span>
+      </div>
+
+      <!-- CTAs -->
+      <div class="mt-10 flex flex-col gap-4 sm:flex-row sm:items-center">
+        <a
+          href="#contact"
+          class="group inline-flex items-center justify-center gap-3 rounded-full bg-gradient-to-r from-gold-light via-gold to-gold-dark px-8 py-4 text-sm font-semibold uppercase tracking-[0.18em] text-ink-900 shadow-gold transition duration-300 hover:brightness-110 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold"
+        >
+          Reserve Your Suite
+          <span aria-hidden="true" class="transition-transform duration-300 group-hover:translate-x-1">→</span>
+        </a>
+        <a
+          href="#suites"
+          class="inline-flex items-center justify-center gap-3 rounded-full border border-gold/35 px-8 py-4 text-sm font-medium uppercase tracking-[0.18em] text-cream transition duration-300 hover:border-gold hover:bg-gold/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold"
+        >
+          Explore the Château
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scroll hint -->
+  <div
+    class="absolute bottom-8 left-1/2 hidden -translate-x-1/2 flex-col items-center gap-3 sm:flex"
+    aria-hidden="true"
+  >
+    <span class="text-[0.6rem] uppercase tracking-widest2 text-cream-dim">Scroll</span>
+    <span class="relative flex h-10 w-5 justify-center rounded-full border border-gold/35">
+      <span class="mt-2 h-1.5 w-1.5 animate-scrollHint rounded-full bg-gold"></span>
+    </span>
+  </div>
+</section>

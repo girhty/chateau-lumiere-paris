@@ -1,0 +1,30 @@
+---
+interface Props {
+  /** Rendered element tag — keep semantic (article, li, div, section). */
+  as?: string;
+  class?: string;
+  /** Enable the signature lift + gold-glow hover interaction. */
+  hover?: boolean;
+  /** Adds a soft gold inner border highlight on hover. */
+  glow?: boolean;
+}
+
+const {
+  as: Tag = 'div',
+  class: className = '',
+  hover = true,
+  glow = true,
+} = Astro.props;
+---
+
+<Tag
+  class:list={[
+    'group relative overflow-hidden rounded-2xl border border-gold/15 bg-white/[0.028] backdrop-blur-[2px]',
+    'transition duration-500 ease-[cubic-bezier(.22,1,.36,1)]',
+    hover && 'hover:-translate-y-1.5 hover:border-gold/45 hover:bg-white/[0.055] hover:shadow-gold',
+    glow && 'before:pointer-events-none before:absolute before:inset-x-6 before:-top-px before:h-px before:bg-gradient-to-r before:from-transparent before:via-gold/60 before:to-transparent before:opacity-0 before:transition-opacity before:duration-500 group-hover:before:opacity-100',
+    className,
+  ]}
+>
+  <slot />
+</Tag>

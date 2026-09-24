@@ -1,0 +1,89 @@
+---
+const year = new Date().getFullYear();
+
+const links = [
+  { label: 'The Experience', href: '#experience' },
+  { label: 'Suites', href: '#suites' },
+  { label: 'Reviews', href: '#reviews' },
+  { label: 'Gallery', href: '#gallery' },
+  { label: 'Contact', href: '#contact' },
+];
+
+const socials = [
+  { label: 'Instagram', href: 'https://www.instagram.com/chateaulumiere_paris/' },
+  { label: 'Google', href: 'https://www.google.com/maps/search/?api=1&query=45+Boulevard+Saint-Germain+75005+Paris+France' },
+];
+---
+
+<footer class="border-t border-gold/15 bg-ink-900">
+  <div class="mx-auto max-w-7xl px-6 py-16 sm:px-8 lg:px-12">
+    <div class="grid gap-12 lg:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)_minmax(0,1fr)]">
+      <div>
+        <p class="font-display text-3xl text-cream">
+          Château <span class="gold-text italic">Lumière</span>
+        </p>
+        <p class="mt-4 max-w-sm text-sm leading-relaxed text-cream-muted">
+          A boutique hotel and restaurant in the 5<sup class="text-[0.7em]">e</sup> arrondissement of Paris.
+          Timeless heritage, contemporary luxury, and a table worth crossing the city for.
+        </p>
+        <p class="mt-6 flex items-center gap-2 text-sm text-cream-dim">
+          <span class="text-gold" aria-hidden="true">★</span>
+          <strong class="font-semibold text-cream">4.9</strong>
+          from 482 Google reviews
+        </p>
+      </div>
+
+      <nav aria-label="Footer navigation">
+        <h2 class="text-[0.62rem] font-semibold uppercase tracking-widest2 text-gold/80">Explore</h2>
+        <ul class="mt-5 list-none space-y-3 p-0 text-sm">
+          {
+            links.map((link) => (
+              <li>
+                <a
+                  href={link.href}
+                  class="text-cream-muted transition hover:text-gold focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold"
+                >
+                  {link.label}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+
+      <div>
+        <h2 class="text-[0.62rem] font-semibold uppercase tracking-widest2 text-gold/80">Visit</h2>
+        <address class="mt-5 not-italic text-sm leading-relaxed text-cream-muted">
+          45 Boulevard Saint-Germain<br />
+          75005 Paris, France<br />
+          <a
+            href="tel:+33142685500"
+            class="mt-2 inline-block text-gold transition hover:text-gold-light focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold"
+          >+33 1 42 68 55 00</a>
+        </address>
+
+        <ul class="mt-6 flex list-none flex-wrap gap-3 p-0">
+          {
+            socials.map((social) => (
+              <li>
+                <a
+                  href={social.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="inline-flex rounded-full border border-gold/25 px-4 py-2 text-xs font-medium uppercase tracking-[0.16em] text-cream-muted transition duration-300 hover:border-gold/60 hover:text-gold focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold"
+                >
+                  {social.label}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+
+    <div class="mt-14 flex flex-col gap-4 border-t border-gold/10 pt-8 text-xs text-cream-dim sm:flex-row sm:items-center sm:justify-between">
+      <p>© {year} Château Lumière Boutique Hotel. All rights reserved.</p>
+      <p class="tracking-widest2 uppercase">Paris · Depuis 1908</p>
+    </div>
+  </div>
+</footer>

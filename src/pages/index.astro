@@ -1,0 +1,277 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Card from '../components/Card.astro';
+import Hero from '../components/Hero.astro';
+import Amenities from '../components/Amenities.astro';
+import Reviews from '../components/Reviews.astro';
+import InstagramFeed from '../components/InstagramFeed.astro';
+import Contact from '../components/Contact.astro';
+
+const googlePlaces = {
+  rating: 4.9,
+  user_ratings_total: 482,
+  formatted_address: '45 Boulevard Saint-Germain, 75005 Paris, France',
+  formatted_phone_number: '+33 1 42 68 55 00',
+  opening_hours: {
+    weekday_text: [
+      'Monday: 24 Hours',
+      'Tuesday: 24 Hours',
+      'Wednesday: 24 Hours',
+      'Thursday: 24 Hours',
+      'Friday: 24 Hours',
+      'Saturday: 24 Hours',
+      'Sunday: 24 Hours',
+    ],
+  },
+  reviews: [
+    {
+      author_name: 'Elena Rostova',
+      rating: 5,
+      text: 'An unforgettable Parisian experience. The rooftop view and concierge service were impeccable.',
+      relative_time_description: '2 weeks ago',
+    },
+    {
+      author_name: 'Marcus Vance',
+      rating: 5,
+      text: 'World-class dining and breathtaking architecture. Truly a 5-star haven.',
+      relative_time_description: 'a month ago',
+    },
+  ],
+};
+
+const instagram = {
+  username: 'chateaulumiere_paris',
+  name: 'Château Lumière Paris',
+  biography: 'Where timeless Parisian heritage meets contemporary luxury. 📍 75005 Paris',
+  followers_count: 48200,
+  posts: [
+    {
+      caption:
+        'Golden hour over the Seine from our Suite Royale 🌅 #ParisLuxury #ChateauLumiere',
+      image_url:
+        'https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=800&auto=format&fit=crop&q=80',
+      likes: 1420,
+    },
+    {
+      caption:
+        'Artisanal breakfast served in our private winter garden 🥐☕ #ParisianMorning',
+      image_url:
+        'https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=800&auto=format&fit=crop&q=80',
+      likes: 2180,
+    },
+    {
+      caption:
+        'Evening degustation by Chef Laurent. Reserve your table for this weekend ✨',
+      image_url:
+        'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=800&auto=format&fit=crop&q=80',
+      likes: 980,
+    },
+  ],
+};
+
+const suites = [
+  {
+    name: 'Chambre Classique',
+    price: 'from €420',
+    detail: '28 m² · Courtyard view · Marble bath',
+    image:
+      'https://images.unsplash.com/photo-1590490360182-c33d57733427?w=1000&auto=format&fit=crop&q=80',
+    alt: 'Classic Parisian hotel room with a king bed and tall shuttered windows',
+  },
+  {
+    name: 'Suite Lumière',
+    price: 'from €780',
+    detail: '52 m² · Boulevard balcony · Salon',
+    image:
+      'https://images.unsplash.com/photo-1618773928121-c32242e63f39?w=1000&auto=format&fit=crop&q=80',
+    alt: 'Spacious suite with a lounge area, gilded mirrors and a balcony',
+    featured: true,
+  },
+  {
+    name: 'Suite Royale',
+    price: 'from €1,240',
+    detail: '74 m² · Seine view · Private terrace',
+    image:
+      'https://images.unsplash.com/photo-1582719508461-905c673771fd?w=1000&auto=format&fit=crop&q=80',
+    alt: 'Royal suite terrace overlooking the river at golden hour',
+  },
+];
+---
+
+<Layout>
+  <Hero rating={googlePlaces.rating} total={googlePlaces.user_ratings_total} />
+
+  <Amenities />
+
+  <!-- Suites -->
+  <section
+    id="suites"
+    class="relative border-t border-gold/10 bg-ink-800 py-24 sm:py-32"
+    aria-labelledby="suites-heading"
+  >
+    <div class="mx-auto max-w-7xl px-6 sm:px-8 lg:px-12">
+      <header class="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between" data-reveal>
+        <div class="max-w-xl">
+          <p class="mb-5 flex items-center gap-3 text-[0.62rem] font-medium uppercase tracking-widest2 text-gold/80 sm:text-xs">
+            <span class="h-px w-10 bg-gold/50" aria-hidden="true"></span>
+            Stay With Us
+          </p>
+          <h2 id="suites-heading" class="font-display text-4xl leading-tight text-cream sm:text-5xl">
+            Rooms shaped by <span class="gold-text italic">light</span>.
+          </h2>
+          <p class="mt-6 text-base leading-relaxed text-cream-muted">
+            Forty-one individually designed rooms and suites, each with hand-picked
+            antiques, Egyptian cotton linens and Parisian shutters that open onto the
+            Boulevard Saint-Germain.
+          </p>
+        </div>
+        <a
+          href="#contact"
+          class="group inline-flex shrink-0 items-center gap-2 self-start rounded-full border border-gold/35 px-6 py-3.5 text-xs font-semibold uppercase tracking-[0.18em] text-cream transition duration-300 hover:border-gold hover:bg-gold/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold sm:self-auto"
+        >
+          Check availability
+          <span aria-hidden="true" class="transition-transform duration-300 group-hover:translate-x-1">→</span>
+        </a>
+      </header>
+
+      <ul class="mt-14 grid list-none gap-6 p-0 lg:grid-cols-3">
+        {
+          suites.map((suite, i) => (
+            <Card
+              as="li"
+              class:list={['p-0', suite.featured && 'lg:-mt-6']}
+              data-reveal
+              style={`transition-delay:${i * 100}ms`}
+            >
+              <article class="flex h-full flex-col">
+                <div class="relative aspect-[4/3] overflow-hidden">
+                  <img
+                    src={suite.image}
+                    alt={suite.alt}
+                    loading="lazy"
+                    decoding="async"
+                    class="h-full w-full object-cover transition duration-[900ms] ease-[cubic-bezier(.22,1,.36,1)] group-hover:scale-[1.06]"
+                  />
+                  <div
+                    class="absolute inset-0 bg-gradient-to-t from-ink-900/80 via-transparent to-transparent"
+                    aria-hidden="true"
+                  ></div>
+                  {suite.featured && (
+                    <span class="absolute left-4 top-4 rounded-full bg-gradient-to-r from-gold-light via-gold to-gold-dark px-3.5 py-1.5 text-[0.6rem] font-bold uppercase tracking-[0.17em] text-ink-900">
+                      Most requested
+                    </span>
+                  )}
+                </div>
+
+                <div class="flex flex-1 flex-col p-7">
+                  <h3 class="font-display text-2xl text-cream">{suite.name}</h3>
+                  <p class="mt-2 text-sm text-cream-dim">{suite.detail}</p>
+                  <p class="mt-5 border-t border-gold/10 pt-5 text-sm font-semibold uppercase tracking-[0.16em] text-gold">
+                    {suite.price}
+                    <span class="ml-2 font-normal normal-case tracking-normal text-cream-dim">/ night</span>
+                  </p>
+                </div>
+              </article>
+            </Card>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <!-- Restaurant band -->
+  <section
+    class="relative isolate overflow-hidden border-t border-gold/10 bg-ink-900 py-24 sm:py-32"
+    aria-labelledby="dining-heading"
+  >
+    <div class="mx-auto grid max-w-7xl items-center gap-14 px-6 sm:px-8 lg:grid-cols-2 lg:gap-20 lg:px-12">
+      <div data-reveal>
+        <p class="mb-5 flex items-center gap-3 text-[0.62rem] font-medium uppercase tracking-widest2 text-gold/80 sm:text-xs">
+          <span class="h-px w-10 bg-gold/50" aria-hidden="true"></span>
+          Le Jardin d’Hiver · Restaurant
+        </p>
+        <h2 id="dining-heading" class="font-display text-4xl leading-tight text-cream sm:text-5xl">
+          A table lit by <span class="gold-text italic">glass and candlelight</span>.
+        </h2>
+        <p class="mt-6 max-w-lg text-base leading-relaxed text-cream-muted">
+          Chef Laurent Deveraux composes a seven-course degustation from the morning’s
+          market at Rue Cler. Beneath the wrought-iron winter garden, the room glows long
+          past midnight — accompanied by our famous 400-label cellar.
+        </p>
+
+        <dl class="mt-10 grid grid-cols-2 gap-x-8 gap-y-6 sm:max-w-md">
+          <div>
+            <dt class="text-[0.6rem] uppercase tracking-widest2 text-gold/75">Dinner</dt>
+            <dd class="mt-1 font-display text-2xl text-cream">19:00 – 23:30</dd>
+          </div>
+          <div>
+            <dt class="text-[0.6rem] uppercase tracking-widest2 text-gold/75">Tasting menu</dt>
+            <dd class="mt-1 font-display text-2xl text-cream">€145</dd>
+          </div>
+        </dl>
+
+        <a
+          href="#contact"
+          class="group mt-10 inline-flex items-center gap-3 rounded-full bg-gradient-to-r from-gold-light via-gold to-gold-dark px-8 py-4 text-sm font-semibold uppercase tracking-[0.18em] text-ink-900 shadow-gold transition duration-300 hover:brightness-110 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold"
+        >
+          Reserve a table
+          <span aria-hidden="true" class="transition-transform duration-300 group-hover:translate-x-1">→</span>
+        </a>
+      </div>
+
+      <Card hover={false} class="overflow-hidden p-0" data-reveal style="transition-delay:120ms">
+        <img
+          src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1200&auto=format&fit=crop&q=80"
+          alt="Candlelit dining room of Le Jardin d’Hiver with gilded mirrors and white linen"
+          loading="lazy"
+          decoding="async"
+          class="aspect-[4/3] w-full object-cover"
+        />
+        <div class="flex flex-wrap items-center justify-between gap-4 p-7">
+          <p class="font-display text-xl text-cream">Le Jardin d’Hiver</p>
+          <p class="text-xs uppercase tracking-widest2 text-cream-dim">Michelin recommended</p>
+        </div>
+      </Card>
+    </div>
+  </section>
+
+  <!-- Quote / spa band -->
+  <section
+    class="relative border-t border-gold/10 bg-ink-800 py-24 sm:py-32"
+    aria-labelledby="spa-heading"
+  >
+    <div class="mx-auto max-w-4xl px-6 text-center sm:px-8" data-reveal>
+      <p class="text-[0.62rem] font-medium uppercase tracking-widest2 text-gold/80 sm:text-xs">
+        Spa Lumière
+      </p>
+      <h2 id="spa-heading" class="mt-6 font-display text-3xl leading-snug text-cream sm:text-4xl lg:text-[2.9rem]">
+        “The quietest room in Paris — a stone plunge pool, a hammam in
+        <span class="gold-text italic">candlelight</span>, and nowhere to be.”
+      </h2>
+      <p class="mt-8 text-sm uppercase tracking-widest2 text-cream-dim">
+        Treatments daily · 09:00 – 21:00
+      </p>
+    </div>
+  </section>
+
+  <Reviews
+    rating={googlePlaces.rating}
+    total={googlePlaces.user_ratings_total}
+    address={googlePlaces.formatted_address}
+    reviews={googlePlaces.reviews}
+  />
+
+  <InstagramFeed
+    username={instagram.username}
+    name={instagram.name}
+    biography={instagram.biography}
+    followersCount={instagram.followers_count}
+    posts={instagram.posts}
+  />
+
+  <Contact
+    address={googlePlaces.formatted_address}
+    phone={googlePlaces.formatted_phone_number}
+    hours={googlePlaces.opening_hours.weekday_text}
+  />
+</Layout>

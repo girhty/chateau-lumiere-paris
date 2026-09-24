@@ -1,0 +1,182 @@
+---
+import Card from './Card.astro';
+
+interface Review {
+  author_name: string;
+  rating: number;
+  text: string;
+  relative_time_description: string;
+}
+
+interface Props {
+  rating?: number;
+  total?: number;
+  address?: string;
+  reviews?: Review[];
+}
+
+const {
+  rating = 4.9,
+  total = 482,
+  address = '45 Boulevard Saint-Germain, 75005 Paris, France',
+  reviews = [
+    {
+      author_name: 'Elena Rostova',
+      rating: 5,
+      text: 'An unforgettable Parisian experience. The rooftop view and concierge service were impeccable.',
+      relative_time_description: '2 weeks ago',
+    },
+    {
+      author_name: 'Marcus Vance',
+      rating: 5,
+      text: 'World-class dining and breathtaking architecture. Truly a 5-star haven.',
+      relative_time_description: 'a month ago',
+    },
+  ],
+} = Astro.props;
+
+const distribution = [
+  { stars: 5, percent: 94 },
+  { stars: 4, percent: 5 },
+  { stars: 3, percent: 1 },
+  { stars: 2, percent: 0 },
+  { stars: 1, percent: 0 },
+];
+
+const initials = (name: string) =>
+  name
+    .split(' ')
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((part) => part[0]?.toUpperCase() ?? '')
+    .join('');
+---
+
+<section
+  id="reviews"
+  class="relative border-t border-gold/10 bg-ink-800 py-24 sm:py-32"
+  aria-labelledby="reviews-heading"
+>
+  <div class="mx-auto max-w-7xl px-6 sm:px-8 lg:px-12">
+    <div class="grid gap-14 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] lg:gap-16">
+      <!-- Rating summary -->
+      <div data-reveal>
+        <p class="mb-5 flex items-center gap-3 text-[0.62rem] font-medium uppercase tracking-widest2 text-gold/80 sm:text-xs">
+          <span class="h-px w-10 bg-gold/50" aria-hidden="true"></span>
+          Guest Voices
+        </p>
+        <h2 id="reviews-heading" class="font-display text-4xl leading-tight text-cream sm:text-5xl">
+          Loved by <span class="gold-text italic">travellers</span> worldwide.
+        </h2>
+
+        <Card hover={false} class="mt-9 p-7">
+          <div class="flex items-center gap-5">
+            <svg viewBox="0 0 24 24" class="h-9 w-9 shrink-0" aria-hidden="true">
+              <path fill="#4285F4" d="M23.5 12.27c0-.79-.07-1.54-.2-2.27H12v4.51h6.47a5.54 5.54 0 0 1-2.4 3.64v3h3.88c2.27-2.09 3.55-5.17 3.55-8.88z"/>
+              <path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.95-2.91l-3.88-3c-1.08.72-2.45 1.15-4.07 1.15-3.13 0-5.78-2.11-6.73-4.96H1.27v3.1A12 12 0 0 0 12 24z"/>
+              <path fill="#FBBC05" d="M5.27 14.28A7.2 7.2 0 0 1 4.89 12c0-.79.14-1.56.38-2.28V6.62H1.27A12 12 0 0 0 0 12c0 1.94.46 3.77 1.27 5.38l4-3.1z"/>
+              <path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.44-3.44C17.95 1.18 15.24 0 12 0A12 12 0 0 0 1.27 6.62l4 3.1C6.22 6.86 8.87 4.75 12 4.75z"/>
+            </svg>
+            <div>
+              <p class="font-display text-5xl leading-none text-cream">
+                {rating.toFixed(1)}
+              </p>
+              <p class="mt-1 text-sm text-cream-dim">
+                Google Reviews · {total.toLocaleString('en-US')} ratings
+              </p>
+            </div>
+          </div>
+
+          <p class="mt-4 flex items-center gap-1 text-lg text-gold" aria-hidden="true">
+            {'★★★★★'.split('').map((s) => <span key={s + Math.random()}>{s}</span>)}
+          </p>
+          <p class="sr-only">Rated {rating} out of 5 stars from {total} Google reviews.</p>
+
+          <ul class="mt-6 list-none space-y-2.5 p-0">
+            {
+              distribution.map((row) => (
+                <li class="flex items-center gap-3 text-xs text-cream-dim">
+                  <span class="w-8 shrink-0 tabular-nums">{row.stars}★</span>
+                  <span
+                    class="h-1.5 flex-1 overflow-hidden rounded-full bg-white/10"
+                    role="img"
+                    aria-label={`${row.percent}% of guests rated ${row.stars} stars`}
+                  >
+                    <span
+                      class="block h-full rounded-full bg-gradient-to-r from-gold-dark to-gold-light"
+                      style={`width:${row.percent}%`}
+                    />
+                  </span>
+                  <span class="w-9 shrink-0 text-right tabular-nums">{row.percent}%</span>
+                </li>
+              ))
+            }
+          </ul>
+
+          <p class="mt-6 border-t border-gold/10 pt-5 text-xs leading-relaxed text-cream-dim">
+            {address}
+          </p>
+        </Card>
+      </div>
+
+      <!-- Review cards -->
+      <ul class="grid list-none content-start gap-6 p-0">
+        {
+          reviews.map((review, i) => (
+            <Card as="li" class="p-7 sm:p-8" data-reveal style={`transition-delay:${i * 110}ms`}>
+              <figure class="flex h-full flex-col">
+                <div class="flex items-start justify-between gap-4">
+                  <div class="flex items-center gap-4">
+                    <span
+                      class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-gold/30 bg-gold/10 font-display text-lg text-gold"
+                      aria-hidden="true"
+                    >
+                      {initials(review.author_name)}
+                    </span>
+                    <div>
+                      <figcaption class="text-sm font-semibold text-cream">
+                        {review.author_name}
+                      </figcaption>
+                      <p class="text-xs text-cream-dim">{review.relative_time_description}</p>
+                    </div>
+                  </div>
+                  <p class="shrink-0 text-sm text-gold" aria-label={`${review.rating} out of 5 stars`}>
+                    {'★'.repeat(Math.max(0, Math.min(5, review.rating)))}
+                  </p>
+                </div>
+
+                <blockquote class="mt-5">
+                  <p class="font-display text-xl leading-relaxed text-cream/95 sm:text-[1.4rem]">
+                    “{review.text}”
+                  </p>
+                </blockquote>
+
+                <p class="mt-5 flex items-center gap-2 text-[0.65rem] uppercase tracking-widest2 text-cream-dim">
+                  <svg viewBox="0 0 24 24" class="h-3.5 w-3.5" aria-hidden="true">
+                    <path fill="#4285F4" d="M23.5 12.27c0-.79-.07-1.54-.2-2.27H12v4.51h6.47a5.54 5.54 0 0 1-2.4 3.64v3h3.88c2.27-2.09 3.55-5.17 3.55-8.88z"/>
+                    <path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.95-2.91l-3.88-3c-1.08.72-2.45 1.15-4.07 1.15-3.13 0-5.78-2.11-6.73-4.96H1.27v3.1A12 12 0 0 0 12 24z"/>
+                    <path fill="#FBBC05" d="M5.27 14.28A7.2 7.2 0 0 1 4.89 12c0-.79.14-1.56.38-2.28V6.62H1.27A12 12 0 0 0 0 12c0 1.94.46 3.77 1.27 5.38l4-3.1z"/>
+                    <path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.44-3.44C17.95 1.18 15.24 0 12 0A12 12 0 0 0 1.27 6.62l4 3.1C6.22 6.86 8.87 4.75 12 4.75z"/>
+                  </svg>
+                  Verified Google review
+                </p>
+              </figure>
+            </Card>
+          ))
+        }
+
+        <li class="pt-2" data-reveal>
+          <a
+            href="https://www.google.com/maps/search/?api=1&query=45+Boulevard+Saint-Germain+75005+Paris+France"
+            class="group inline-flex items-center gap-3 text-sm font-medium text-gold transition hover:text-gold-light focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            Read all {total.toLocaleString('en-US')} reviews on Google
+            <span aria-hidden="true" class="transition-transform duration-300 group-hover:translate-x-1">→</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
